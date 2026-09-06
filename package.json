@@ -2,7 +2,7 @@
   "name": "smart-health",
   "version": "0.1.0",
   "private": true,
-  "description": "Estrutura inicial do Smart Health — somente ambiente e pastas.",
+  "description": "Smart Health — backend modular do Projeto Integrador.",
   "workspaces": [
     "backend",
     "frontend"
@@ -12,6 +12,10 @@
     "npm": ">=10"
   },
   "scripts": {
+    "dev": "npm run dev --workspace backend",
+    "start": "npm run start --workspace backend",
+    "test": "npm test --workspace backend",
+    "db:migrate": "npm run db:migrate --workspace backend",
     "db:up": "docker compose up -d --wait database",
     "db:down": "docker compose down"
   }

@@ -1,32 +1,23 @@
-# Divisão de responsabilidades
+# Arquitetura atual
 
-Arquitetura prevista: cliente-servidor + API REST + monólito modular em camadas. Uma única aplicação backend implantável, organizada por domínio. Nesta entrega nenhuma camada possui implementação.
+Cliente-servidor + API REST + monólito modular em camadas. Backend Express/JavaScript ESM, PostgreSQL 17 via pg, sem ORM. Frontend React/Vite/TypeScript ainda reservado.
 
-Fluxo futuro: frontend → HTTP/JSON → routes → controllers → services → repositories → PostgreSQL.
+Fluxo: HTTP/JSON → routes → controllers → services → repositories → PostgreSQL.
 
-| Pasta | Responsabilidade futura |
+| Camada | Responsabilidade |
 | --- | --- |
-| routes | Mapear endpoints e aplicar middlewares; sem SQL ou regras de negócio |
-| controllers | Adaptar HTTP e chamar services; sem acessar o banco diretamente |
-| services | Executar casos de uso e regras de negócio sem depender de req/res |
-| repositories | Concentrar SQL e persistência do módulo |
-| validators | Validar formato, tipos e campos de entrada |
-| models | Representar dados e invariantes de domínio; não implica ORM |
-| middlewares | Autenticação, validação compartilhada e tratamento de erros |
-| database/connection | Centralizar conexão PostgreSQL |
-| database/migrations | Versionar mudanças do schema quando forem implementadas |
-| config | Configurações da aplicação |
-| shared | Utilitários compartilhados quando existir necessidade real |
+| routes | Endpoints e aplicação de autenticação |
+| controllers | Adaptar HTTP, invocar validações e serviços |
+| validators | Validar campos, tipos e limites |
+| services | Casos de uso, credenciais, sessões e propriedade dos registros |
+| repositories | SQL parametrizado e filtro pelo titular |
+| models | Representações públicas; sem hash de senha |
+| middlewares | Autenticação e erros uniformes |
+| database | Pool e migrations transacionais com checksum |
+| config/shared | Ambiente e utilitários comuns |
 
-| Módulo | Escopo reservado |
-| --- | --- |
-| users | Cadastro, perfil, identidade e planos Free/Premium |
-| activities | Atividades vinculadas ao usuário |
-| content | Vídeos, treinos e filtros; confirmar necessidade do backend |
-| reminders | Lembretes e agendamento por dias e horários |
-| progress | Histórico de métricas, progresso e metas |
-| recommendations | Recomendações baseadas no perfil |
+users e activities estão implementados. reminders, progress, content e recommendations pertencem à frente B. Não há microserviços, filas, API Gateway ou serviços Base44/Supabase.
 
-Autenticação, ORM e executor de migrations não foram escolhidos. Não há microserviços, arquitetura hexagonal, API Gateway, filas, Redis, Base44 ou Supabase configurados. As regras RNE-001 a RNE-005 e os requisitos funcionais do documento permanecem pendentes.
+`app.js` compõe módulos e permite `createApp({pool,registerModules})`; `server.js` abre a porta e trata encerramento. Sessões opacas usam tokens aleatórios de 32 bytes; banco armazena digest e expiração. O middleware fornece `req.auth.user` e `req.auth.token`. Dados pessoais são acessados pelo titular da sessão, nunca por userId enviado no corpo.
 
-As pastas vazias foram reservadas porque o pedido atual é preparar a divisão de diretórios antes de escrever código. Os pontos de entrada app.js e server.js serão criados depois, em backend/src/. O frontend acessará exclusivamente a API, nunca o banco diretamente.
+As migrations numeradas possuem transação, lock para concorrência e checksum. Não alterar SQL já aplicado: criar migration nova. A aplicação não executa migrations automaticamente ao iniciar.
