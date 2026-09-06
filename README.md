@@ -1,80 +1,38 @@
 # Smart Health
 
-Novo projeto do PI organizado conforme a especificação de arquitetura modular, versão 1.0 de setembro de 2026. Esta etapa contém **somente pastas e configuração do ambiente**.
+Projeto Integrador, 6º período, Fase 01. Backend modular Node.js 22.13+, Express 5, JavaScript ESM e PostgreSQL 17 com pg, sem ORM.
 
-Não há código de aplicação, telas, API, endpoints, autenticação, modelos, SQL, migrations ou testes implementados. Os arquivos `.gitkeep` são marcadores vazios para o Git preservar os diretórios.
-
-## Ambiente previsto
-
-- Node.js 22.13+ e npm 10+.
-- Frontend: React + Vite + TypeScript.
-- Backend: Node.js + Express, JavaScript ESM.
-- Persistência: PostgreSQL 17 e driver pg, sem ORM.
-- npm workspaces para frontend e backend, com um único package-lock.json.
-
-O campo `private: true` dos package.json impede publicação acidental no npm; não define a visibilidade do repositório no GitHub.
-
-## Preparação local
-
-Na raiz do projeto:
+## Executar localmente
 
 ```powershell
 npm.cmd ci
 Copy-Item .env.example .env
 Copy-Item backend/.env.example backend/.env
-Copy-Item frontend/.env.example frontend/.env
+npm.cmd run db:up
+npm.cmd run db:migrate
+npm.cmd run dev
 ```
 
-Copie os exemplos somente se os arquivos .env ainda não existirem. Não sobrescreva configurações locais já ajustadas. As dependências estão declaradas e travadas no lockfile para a implementação futura.
+Copie exemplos somente se os arquivos .env ainda não existirem. É necessário Docker Desktop ativo ou PostgreSQL separado configurado em DATABASE_URL. API: http://127.0.0.1:3000. `npm.cmd start` inicia sem watch; `db:down` preserva dados.
 
-Se quiser preparar o PostgreSQL local, abra o Docker Desktop e execute:
+## Implementação
+
+Cadastro, login/logout, perfil e atividades com persistência e isolamento por usuário. Tokens Bearer de 24 horas são revogáveis; somente o digest SHA-256 fica no banco. Senhas usam scrypt com salt. Cadastro cria plano Free, sem promoção de plano pelo cliente.
+
+Frontend, lembretes, progresso agregado, conteúdo e recomendações ainda não estão implementados nesta branch. React/Vite/TypeScript estão reservados para frontend. Base44 e Supabase não são usados.
+
+## Testes
+
+`npm.cmd test` executa a suíte. O teste de integração exige TEST_DATABASE_URL e cria/remove um schema isolado, sem truncar tabelas da aplicação. Sem essa variável, a integração é explicitamente ignorada.
 
 ```powershell
-npm.cmd run db:up
+$env:TEST_DATABASE_URL='postgresql://smart_health:smart_health_local@127.0.0.1:5432/smart_health'
+npm.cmd test
 ```
 
-`npm.cmd run db:down` para os containers e preserva o volume de dados. Também é possível usar PostgreSQL instalado separadamente; nesse caso, configure DATABASE_URL em backend/.env. O Compose só configura o banco, sem tabelas de negócio.
+Esta versão se destina à demonstração local. Limitação de tentativas de login, recuperação/verificação de conta, limpeza de sessões expiradas e HTTPS do ambiente publicado são evoluções pendentes.
 
-As credenciais dos exemplos são apenas de desenvolvimento local. O banco é publicado em 127.0.0.1. Mantenha o .env raiz e DATABASE_URL do backend sincronizados se alterar usuário, senha, banco ou porta. As variáveis POSTGRES_* inicializam somente um volume novo; não alteram a senha de um banco já existente. Nunca exponha DATABASE_URL no frontend.
-
-Não existem comandos dev, start, build ou test nesta etapa, pois ainda não há aplicação. app.js, server.js, index.html e demais arquivos de execução serão criados quando começar a implementação.
-
-## Pastas
-
-```text
-smart-health/
-├── backend/
-│   └── src/
-│       ├── modules/
-│       │   ├── users/
-│       │   ├── activities/
-│       │   ├── content/
-│       │   ├── reminders/
-│       │   ├── progress/
-│       │   └── recommendations/
-│       ├── middlewares/
-│       │   ├── authentication/
-│       │   ├── validation/
-│       │   └── error-handling/
-│       ├── database/
-│       │   ├── connection/
-│       │   └── migrations/
-│       ├── config/
-│       └── shared/
-├── frontend/
-│   ├── public/
-│   └── src/
-│       ├── app/
-│       ├── assets/
-│       ├── components/
-│       ├── pages/
-│       ├── services/
-│       └── styles/
-├── docs/
-├── compose.yaml
-└── package.json
-```
-
-Cada um dos seis módulos possui: `routes/`, `controllers/`, `services/`, `repositories/`, `validators/` e `models/`.
-
-Consulte [a divisão de responsabilidades](docs/arquitetura.md). A nova autenticação e o modelo de dados serão definidos em etapas futuras. O repositório antigo é independente deste projeto e não é necessário para instalá-lo.
+- [Arquitetura](docs/arquitetura.md)
+- [Contrato HTTP](docs/api.md)
+- [Tarefa do colega e merge](docs/frente-colega.md)
+- [Atualizações da especificação acadêmica](docs/fase01.md)
