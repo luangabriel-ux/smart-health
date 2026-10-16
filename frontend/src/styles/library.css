@@ -1,0 +1,457 @@
+.library-search {
+  margin-top: 15px;
+}
+.library-search .search-field > button {
+  position: absolute;
+  right: 7px;
+  top: 6px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #7e8fa7;
+}
+.library-search .search-field > input {
+  padding-right: 38px;
+}
+.library-categories {
+  margin: 8px 0 12px;
+}
+.library-tabs {
+  display: flex;
+  gap: 22px;
+  margin: 14px 0 22px;
+}
+.library-tabs button {
+  position: relative;
+  color: #98a3b8;
+  font-size: 11px;
+  padding: 0 0 8px;
+}
+.library-tabs .active {
+  color: #169dff;
+  font-weight: 650;
+}
+.library-tabs .active:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #159eff;
+  border-radius: 3px;
+}
+.video-grid {
+  display: grid;
+  gap: 22px;
+}
+.video-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 3px 10px #20344d08;
+}
+.video-thumbnail {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 160px;
+  padding: 0;
+  background: #d9e4e7;
+  overflow: hidden;
+}
+.video-thumbnail > img,
+.video-detail-hero > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.video-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 59px;
+  height: 59px;
+  border-radius: 50%;
+  background: #fff;
+  color: #009d91;
+  box-shadow: 0 3px 12px #14203615;
+}
+.video-thumbnail:after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 40px;
+  background: #13262a;
+  pointer-events: none;
+}
+.video-detail-hero > .video-play {
+  width: 85px;
+  height: 85px;
+}
+.video-card-body {
+  padding: 13px 13px 12px;
+}
+.video-card-body > button {
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+.video-card-body h2 {
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.video-card-body > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+}
+.level-badge {
+  font-size: 8px;
+  color: #26a65a;
+  background: #edfff0;
+  border-radius: 5px;
+  padding: 3px 6px;
+}
+.level-badge.advanced {
+  color: #ed6f9e;
+  background: #ffedf3;
+}
+.video-card-body small {
+  font-size: 9px;
+  color: #9ca8b9;
+  flex: 1;
+}
+.video-card-body > div > button {
+  color: #b1bac9;
+  display: grid;
+  place-items: center;
+}
+.premium-video-badge {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 9px;
+  background: #ffa318;
+  border-radius: 7px;
+  padding: 4px 7px;
+}
+.content-reading {
+  padding: 0 20px 27px;
+}
+.content-reading > h1 {
+  font-size: 23px;
+  line-height: 1.45;
+  margin: 10px 0 15px;
+  letter-spacing: -0.5px;
+  overflow-wrap: anywhere;
+}
+.article-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 245px;
+  gap: 11px;
+  background: linear-gradient(115deg, #009d8c, #20bfd4);
+  color: #fff;
+  border-radius: 19px;
+  box-shadow: 0 6px 15px #00a89822;
+  text-align: center;
+  padding: 15px;
+}
+.article-hero strong {
+  font-size: 15px;
+  margin-top: 4px;
+}
+.article-hero > span {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.5px;
+}
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 19px;
+}
+.article-meta .badge {
+  font-size: 9px;
+  padding: 5px 8px;
+}
+.article-meta > small {
+  font-size: 9px;
+}
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 35px;
+}
+.mini-logo {
+  display: grid;
+  place-items: center;
+  background: var(--teal);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 650;
+}
+.article-author strong {
+  display: block;
+  font-size: 10px;
+}
+.article-author small {
+  display: block;
+  font-size: 9px;
+  margin-top: 3px;
+  color: #a4b0c0;
+}
+.article-body {
+  font-size: 13px;
+  line-height: 1.9;
+}
+.article-body p {
+  color: #4e6078;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 0 0 20px;
+}
+.save-content {
+  margin-top: 29px;
+  gap: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.local-favorites-note {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 9px;
+  color: #9caabd;
+}
+.video-detail-hero {
+  position: relative;
+  height: 235px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.video-detail-hero:after {
+  content: '';
+  position: absolute;
+  inset: 65% 0 0;
+  background: linear-gradient(transparent, #13262a 35%);
+  pointer-events: none;
+}
+.video-detail-hero > .badge {
+  position: absolute;
+  left: 13px;
+  bottom: 13px;
+  background: #008f85;
+  color: #fff;
+  z-index: 1;
+}
+.video-description {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.video-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 23px 0;
+}
+.video-facts > div {
+  text-align: center;
+  background: #fff;
+  border-radius: 13px;
+  padding: 15px 6px;
+  font-size: 17px;
+  color: #26a9b0;
+}
+.video-facts strong {
+  display: block;
+  font-size: 11px;
+  color: #17243c;
+  margin: 7px 0 3px;
+}
+.video-facts small {
+  display: block;
+  font-size: 9px;
+}
+.session-heading {
+  font-size: 14px;
+  margin: 23px 0 13px;
+}
+.session-step {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-radius: 13px;
+  background: #fff;
+  padding: 14px;
+  margin: 11px 0;
+}
+.session-step > span {
+  display: grid;
+  place-items: center;
+  background: #e1f5f3;
+  color: #00a298;
+  border-radius: 8px;
+  width: 30px;
+  height: 32px;
+  font-size: 12px;
+}
+.session-step strong {
+  display: block;
+  font-size: 11px;
+}
+.session-step small {
+  display: block;
+  font-size: 9px;
+  margin-top: 3px;
+}
+.start-workout {
+  margin-top: 25px;
+}
+.timer-content {
+  padding: 15px 20px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.timer-content > .badge {
+  font-size: 10px;
+}
+.timer-title {
+  text-align: center;
+  margin: 42px 0 50px;
+}
+.timer-title > small {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: #009b94;
+  text-transform: uppercase;
+  font-weight: 650;
+}
+.timer-title h1 {
+  font-size: 25px;
+  margin: 9px 0 6px;
+  overflow-wrap: anywhere;
+}
+.timer-title p {
+  font-size: 11px;
+}
+.timer-ring {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 240px;
+  height: 240px;
+  border: 11px solid #e4e7ed;
+  border-radius: 50%;
+  margin-bottom: 48px;
+}
+.timer-ring > strong {
+  font-size: 47px;
+  letter-spacing: -2px;
+  color: #243143;
+}
+.timer-ring > .badge {
+  font-size: 10px;
+}
+.timer-reference {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 13px;
+}
+.timer-reference p {
+  font-size: 11px;
+}
+.timer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 27px;
+  margin: 45px 0 32px;
+}
+.timer-controls > .icon-button {
+  border-radius: 50%;
+  width: 41px;
+  height: 41px;
+}
+.timer-pause {
+  display: grid;
+  place-items: center;
+  background: var(--gradient);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: white;
+  box-shadow: 0 5px 14px #00a59a35;
+}
+.timer-content > .danger {
+  padding: 14px;
+}
+.recommendation-intro {
+  margin-bottom: 20px;
+}
+.recommendation-intro p {
+  margin-top: 6px;
+  font-size: 12px;
+}
+.recommendation-list {
+  display: grid;
+  gap: 15px;
+}
+.recommendation-card {
+  padding: 18px;
+  background: white;
+  border-radius: 17px;
+  box-shadow: 0 3px 10px #20344d06;
+}
+.recommendation-card > span {
+  margin-bottom: 14px;
+}
+.recommendation-card h2 {
+  font-size: 15px;
+  margin-bottom: 9px;
+}
+.recommendation-card p {
+  font-size: 12px;
+  line-height: 1.75;
+}
+.recommendation-card small {
+  display: block;
+  font-size: 10px;
+  color: #94a2b8;
+  margin-top: 12px;
+}
+.app-shell[data-theme='dark'] .video-card,
+.app-shell[data-theme='dark'] .video-facts > div,
+.app-shell[data-theme='dark'] .session-step,
+.app-shell[data-theme='dark'] .recommendation-card {
+  background: var(--surface);
+}
+.app-shell[data-theme='dark'] .article-body p,
+.app-shell[data-theme='dark'] .video-facts strong,
+.app-shell[data-theme='dark'] .timer-ring strong {
+  color: #d2dff1;
+}

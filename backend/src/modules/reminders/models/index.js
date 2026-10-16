@@ -3,6 +3,7 @@ export function reminderView(row) {
     id: row.id,
     userId: row.user_id,
     title: row.title,
+    category: row.category,
     time: String(row.time).slice(0, 5),
     weekdays: row.weekdays,
     timezone: row.timezone,

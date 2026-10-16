@@ -1,5 +1,12 @@
 import { invalid, object, string } from '../../../shared/validation.js';
 
+function validateCategory(value) {
+  if (!['exercise', 'medication', 'water', 'meal', 'habit'].includes(value)) {
+    invalid('Categoria de lembrete inválida.');
+  }
+  return value;
+}
+
 function validateTime(value) {
   if (typeof value !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(value)) {
     invalid('time deve estar no formato HH:mm.');
@@ -63,7 +70,8 @@ export function createReminder(body) {
     'time',
     'weekdays',
     'timezone',
-    'active'
+    'active',
+    'category'
   ]);
 
   if (body.title === undefined) {
@@ -80,6 +88,7 @@ export function createReminder(body) {
 
   return {
     title: string(body.title, 'title', 120),
+    category: body.category === undefined ? 'habit' : validateCategory(body.category),
     time: validateTime(body.time),
     weekdays: validateWeekdays(body.weekdays),
     timezone:
@@ -99,7 +108,8 @@ export function updateReminder(body) {
     'time',
     'weekdays',
     'timezone',
-    'active'
+    'active',
+    'category'
   ]);
 
   if (Object.keys(body).length === 0) {
@@ -107,6 +117,7 @@ export function updateReminder(body) {
   }
 
   const result = {};
+  if (body.category !== undefined) result.category = validateCategory(body.category);
 
   if (body.title !== undefined) {
     result.title = string(body.title, 'title', 120);

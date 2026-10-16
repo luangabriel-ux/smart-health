@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { credentials, profile } from '../src/modules/users/validators/index.js';
-import { activity } from '../src/modules/activities/validators/index.js';
+import { activity, activityListQuery } from '../src/modules/activities/validators/index.js';
 import { hashPassword, verifyPassword } from '../src/modules/users/services/index.js';
 test('cadastro normaliza email e rejeita dados inválidos e promoção de plano', () => {
   assert.equal(credentials({name:'Ana',email:' ANA@EXAMPLE.COM ',password:'password123'},true).email,'ana@example.com');
@@ -20,4 +20,9 @@ test('hash de senha tem salt aleatório e verifica credenciais', async () => {
   assert.notEqual(hash,await hashPassword('password123'));
   assert.equal(await verifyPassword('password123',hash),true);
   assert.equal(await verifyPassword('wrong',hash),false);
+});
+
+test('histórico valida filtro de atividade e paginação antes de consultar', () => {
+  assert.deepEqual(activityListQuery({ type: 'water', limit: '21', offset: '20' }), { limit: 21, offset: 20, type: 'water' });
+  for (const query of [{ type: 'other' }, { type: ['water'] }, { limit: '-1' }, { userId: 'other' }]) assert.throws(() => activityListQuery(query));
 });

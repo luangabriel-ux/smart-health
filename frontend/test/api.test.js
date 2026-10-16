@@ -53,3 +53,15 @@ test('resposta atrasada de sessão anterior não encerra um novo login', async (
   await assert.rejects(pending);
   assert.equal(expired, 0);
 });
+
+test('filtros opcionais ausentes não são enviados como texto undefined', async () => {
+  let path;
+  const api=createApi({fetcher:async value=>{path=value;return Response.json({data:[]});}});
+  await api.listContent({type:'video',category:undefined,search:undefined});
+  const query=new URL(path,'http://localhost').searchParams;
+  assert.equal(query.get('type'),'video');
+  assert.equal(query.has('category'),false);
+  assert.equal(query.has('search'),false);
+  await api.listActivities(21,20,'water');
+  assert.equal(new URL(path,'http://localhost').searchParams.get('type'),'water');
+});
