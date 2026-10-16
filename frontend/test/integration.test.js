@@ -55,6 +55,8 @@ test('cliente frontend → proxy Vite → API → PostgreSQL', { skip: !process.
     const first = await api.listActivities(21, 0), second = await api.listActivities(21, 20);
     assert.equal(first.data.length, 21);
     assert.equal(second.data.length, 2);
+    assert.equal((await api.listActivities(20, 0, 'water')).data.length, 1);
+    assert.equal((await api.listActivities(20, 0, 'habit')).data.length, 20);
     assert.equal(first.data.slice(0, 20).some(item => second.data.some(other => item.id === other.id)), false);
     const other = createApi({ fetcher });
     await other.register({ ...input, email: 'other@example.com' });
@@ -81,6 +83,8 @@ test('cliente frontend → proxy Vite → API → PostgreSQL', { skip: !process.
     const articleId = randomUUID(), premiumId = randomUUID();
     await pool.query(`INSERT INTO contents(id,title,category,type,text_content,is_premium) VALUES ($1,'Material de teste','demo','article','Texto de demonstração',false), ($2,'Material Premium','demo','article','Texto restrito',true)`, [articleId, premiumId]);
     assert.equal((await api.listContent({ category: 'demo', type: 'article' })).data.length, 2);
+    assert.equal((await api.listContent({ search: 'premium' })).data.length, 1);
+    assert.equal((await api.listContent({ search: 'não existe' })).data.length, 0);
     assert.equal((await api.getContent(articleId)).data.textContent, 'Texto de demonstração');
     const premium = (await api.getContent(premiumId)).data;
     assert.equal(premium.locked, true);

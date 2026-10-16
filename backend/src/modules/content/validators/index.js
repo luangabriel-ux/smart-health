@@ -7,6 +7,7 @@ import {
 
 export function contentFilters(query) {
   object(query, [
+    'search',
     'category',
     'type',
     'difficulty',
@@ -16,6 +17,7 @@ export function contentFilters(query) {
 
   const page = pagination(query);
   const filters = {};
+  if (query.search !== undefined) filters.search = string(query.search, 'search', 200);
 
   if (query.category !== undefined) {
     filters.category = string(

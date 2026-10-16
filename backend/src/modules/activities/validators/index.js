@@ -1,4 +1,9 @@
-import { object, string, number, invalid } from '../../../shared/validation.js';
+import { object, string, number, invalid, pagination } from '../../../shared/validation.js';
+export function activityListQuery(query) {
+  object(query, ['limit', 'offset', 'type']);
+  if (query.type !== undefined && !['exercise', 'water', 'meal', 'habit'].includes(query.type)) invalid('Tipo inválido.');
+  return { ...pagination(query), ...(query.type ? { type: query.type } : {}) };
+}
 export function activity(body) {
   object(body, ['type', 'description', 'occurredAt', 'durationMinutes', 'waterMl', 'steps', 'calories']);
   if (!['exercise', 'water', 'meal', 'habit'].includes(body.type)) invalid('Tipo inválido.');

@@ -3,6 +3,10 @@ export function createContentRepository(db) {
     async list(filters) {
       const conditions = [];
       const values = [];
+      if (filters.search !== undefined) {
+        values.push(`%${filters.search}%`);
+        conditions.push(`(title ILIKE $${values.length} OR category ILIKE $${values.length})`);
+      }
 
       if (filters.category !== undefined) {
         values.push(filters.category);
