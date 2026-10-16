@@ -32,4 +32,26 @@ p, small { color: #52685e; }
 .feedback { padding: .85rem 1rem; border-radius: 8px; overflow-wrap: anywhere; }
 .error { background: #fff0ee; color: #9f271f; }
 .success { background: #e9f5ee; color: #185947; }
+.welcome { margin: .5rem 0 1.7rem; }
+.welcome h1 { margin: .6rem 0; font-size: 2.4rem; overflow-wrap: anywhere; }
+.tabs, .actions { display: flex; flex-wrap: wrap; gap: .65rem; }
+.tabs { margin-bottom: 1.4rem; }
+.stack { display: grid; gap: 1.4rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+.account-info { background: #f3f7f4; padding: .7rem; border-radius: 8px; overflow-wrap: anywhere; }
+.section-heading { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.activity-list { list-style: none; padding: 0; margin: 0; }
+.activity-list li { padding: 1.2rem 0; border-top: 1px solid #e1eae4; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
+.activity-list li > div:first-child { min-width: 0; }
+.activity-list h3 { margin: .5rem 0 .25rem; font-size: 1rem; overflow-wrap: anywhere; white-space: pre-wrap; }
+.activity-list time { color: #52685e; font-size: .85rem; }
+.badge { font-size: .75rem; padding: .2rem .5rem; background: #e9f5ee; color: #185947; border-radius: 5px; }
+.metrics { margin: .5rem 0 0; font-size: .9rem; }
+.empty { padding: 2rem 1rem; text-align: center; background: #f6f9f7; border-radius: 10px; }
+.pagination { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding-top: 1rem; border-top: 1px solid #e1eae4; }
+.pagination span { font-size: .85rem; }
+.delete-confirm p { margin-bottom: .5rem; }
+.danger { background: #a3362d; }
+.danger:hover { background: #84251e; }
+@media (max-width: 540px) { .activity-list li { align-items: start; flex-direction: column; gap: .7rem; } .section-heading { flex-wrap: wrap; } .pagination button { padding: .6rem .7rem; } }
 @media (max-width: 720px) { .auth-layout { grid-template-columns: 1fr; gap: 1.8rem; padding: 2rem 1.2rem; } .intro h1 { font-size: 2.3rem; } .card { padding: 1.2rem; } }
