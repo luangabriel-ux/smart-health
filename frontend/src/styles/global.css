@@ -1,0 +1,35 @@
+:root { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #18372f; background: #f3f7f4; font-synthesis: none; line-height: 1.5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; border: 1px solid transparent; border-radius: 9px; padding: .7rem 1.15rem; background: #126858; color: white; font-weight: 600; }
+button:hover { background: #0b5144; }
+button:disabled { cursor: wait; opacity: .6; }
+:focus-visible { outline: 3px solid #b76b13; outline-offset: 3px; }
+input, select, textarea { display: block; width: 100%; border: 1px solid #9cafa5; border-radius: 8px; background: white; padding: .7rem; color: #18372f; }
+textarea { min-height: 95px; resize: vertical; }
+label { display: grid; gap: .35rem; font-weight: 600; }
+fieldset { margin: 0; border: 0; padding: 0; display: grid; gap: 1rem; min-width: 0; }
+fieldset button { justify-self: start; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { line-height: 1.15; letter-spacing: -.035em; }
+p, small { color: #52685e; }
+.auth-layout { min-height: 100vh; max-width: 1100px; margin: auto; padding: 3rem 1.5rem; display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 5rem; }
+.intro h1 { font-size: clamp(2.2rem, 4vw, 3.7rem); margin: 1.2rem 0; }
+.intro p { font-size: 1.1rem; max-width: 35ch; }
+.eyebrow { font-size: .8rem; letter-spacing: .16em; font-weight: 800; color: #126858; }
+.card { background: white; border: 1px solid #d9e4dd; border-radius: 16px; padding: 1.7rem; }
+.auth-card { box-shadow: 0 16px 55px #193e2d0a; }
+.auth-card form { margin: 1.5rem 0 .5rem; }
+.text-button { background: transparent; color: #126858; padding-left: 0; }
+.text-button:hover { background: transparent; text-decoration: underline; }
+.secondary { background: white; border-color: #b4c7bd; color: #185947; }
+.secondary:hover { background: #edf5f0; }
+.header { padding: 1rem max(1.5rem, calc((100vw - 1120px) / 2)); display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: white; border-bottom: 1px solid #d9e4dd; }
+.brand { color: #126858; font-size: 1.25rem; font-weight: 800; text-decoration: none; }
+.brand span { display: block; font-size: .75rem; font-weight: 400; color: #52685e; }
+.container { max-width: 1170px; margin: auto; padding: 2rem 1.5rem 4rem; }
+.feedback { padding: .85rem 1rem; border-radius: 8px; overflow-wrap: anywhere; }
+.error { background: #fff0ee; color: #9f271f; }
+.success { background: #e9f5ee; color: #185947; }
+@media (max-width: 720px) { .auth-layout { grid-template-columns: 1fr; gap: 1.8rem; padding: 2rem 1.2rem; } .intro h1 { font-size: 2.3rem; } .card { padding: 1.2rem; } }

@@ -28,7 +28,7 @@ export function createApi({ getToken = () => null, onUnauthorized = () => {}, fe
     } catch {
       throw new ApiError(0, 'NETWORK_ERROR', 'Não foi possível conectar ao servidor. Tente novamente.');
     }
-    if (response.status === 401 && authenticated) onUnauthorized();
+    if (response.status === 401 && authenticated && token === getToken()) onUnauthorized();
     if (response.status === 204 && response.ok) return undefined as T;
     const payload = await response.json().catch(() => null);
     if (!response.ok) throw new ApiError(response.status, payload?.error?.code ?? 'HTTP_ERROR',
