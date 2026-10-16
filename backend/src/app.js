@@ -7,8 +7,9 @@ import { createActivitiesRepository } from './modules/activities/repositories/in
 import { createActivitiesService } from './modules/activities/services/index.js';
 import { createActivitiesRouter } from './modules/activities/routes/index.js';
 import { errorHandler } from './middlewares/error-handling/index.js';
+import { registerModules as registerExtraModules } from './modules/register-extra.js';
 
-export function createApp({ pool, registerModules = () => {}, frontendDirectory }) {
+export function createApp({ pool, registerModules = registerExtraModules, frontendDirectory }) {
   const app = express();
   app.disable('x-powered-by');
   app.use((req,res,next) => { res.set('Cache-Control','no-store'); res.set('X-Content-Type-Options','nosniff'); next(); });

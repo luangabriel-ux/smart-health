@@ -19,6 +19,9 @@ test('servidor entrega frontend e preserva respostas e autenticação da API', a
     assert.match(page.headers.get('content-type'), /text\/html/);
     assert.match(await page.text(), /Smart Health/);
     assert.equal((await fetch(`${base}/api/users/me`)).status, 401);
+    for (const path of ['/reminders', '/progress', '/content', '/recommendations']) {
+      assert.equal((await fetch(`${base}/api${path}`)).status, 401);
+    }
     const missing = await fetch(`${base}/api/missing`);
     assert.equal(missing.status, 404);
     assert.equal((await missing.json()).error.code, 'NOT_FOUND');
