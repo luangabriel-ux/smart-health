@@ -6,6 +6,10 @@ import type { StoredSession } from '../services/session.ts';
 import { AuthPage } from '../pages/AuthPage.tsx';
 import { ProfilePage } from '../pages/ProfilePage.tsx';
 import { ActivitiesPage } from '../pages/ActivitiesPage.tsx';
+import { RemindersPage } from '../pages/RemindersPage.tsx';
+import { ProgressPage } from '../pages/ProgressPage.tsx';
+import { ContentPage } from '../pages/ContentPage.tsx';
+import { RecommendationsPage } from '../pages/RecommendationsPage.tsx';
 import { Feedback, errorMessage } from '../components/Feedback.tsx';
 
 export function App() {
@@ -16,7 +20,8 @@ export function App() {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
-  const [page, setPage] = useState<'activities' | 'profile'>('activities');
+  const pages = { activities: 'Atividades', reminders: 'Lembretes', progress: 'Progresso', content: 'Conteúdos', recommendations: 'Recomendações', profile: 'Meu perfil' };
+  const [page, setPage] = useState<keyof typeof pages>('activities');
   function endSession(message = '') {
     sessionRef.current = null; writeSession(window.sessionStorage, null);
     setSession(null); setUser(null); setError(''); setNotice(message); setLoading(false);
@@ -57,10 +62,14 @@ export function App() {
       {loading ? <p role="status">Carregando seu perfil…</p> : user ? <>
         <div className="welcome"><span className="eyebrow">SUA ROTINA, SEU RITMO</span><h1>Olá, {user.name}</h1><p>Acompanhe seus hábitos e mantenha suas informações atualizadas.</p></div>
         <nav className="tabs" aria-label="Menu principal">
-          <button aria-current={page === 'activities' ? 'page' : undefined} className={page === 'activities' ? '' : 'secondary'} onClick={() => setPage('activities')}>Atividades</button>
-          <button aria-current={page === 'profile' ? 'page' : undefined} className={page === 'profile' ? '' : 'secondary'} onClick={() => setPage('profile')}>Meu perfil</button>
+          {(Object.entries(pages) as [keyof typeof pages, string][]).map(([key, label]) => <button key={key} aria-current={page === key ? 'page' : undefined} className={page === key ? '' : 'secondary'} onClick={() => setPage(key)}>{label}</button>)}
         </nav>
-        {page === 'profile' ? <ProfilePage api={api} user={user} onUpdate={setUser} /> : <ActivitiesPage api={api} />}
+        {page === 'activities' && <ActivitiesPage api={api} />}
+        {page === 'profile' && <ProfilePage api={api} user={user} onUpdate={setUser} />}
+        {page === 'reminders' && <RemindersPage api={api} />}
+        {page === 'progress' && <ProgressPage api={api} />}
+        {page === 'content' && <ContentPage api={api} />}
+        {page === 'recommendations' && <RecommendationsPage api={api} onProfile={() => setPage('profile')} />}
       </>
         : <button onClick={() => setSession(current => current && { ...current })}>Tentar carregar novamente</button>}
     </main></>;
