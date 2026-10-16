@@ -14,7 +14,10 @@
   "scripts": {
     "dev": "npm run dev --workspace backend",
     "start": "npm run start --workspace backend",
-    "test": "npm test --workspace backend",
+    "test": "npm test --workspace backend && npm test --workspace frontend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend",
+    "preview": "npm run preview --workspace frontend",
     "db:migrate": "npm run db:migrate --workspace backend",
     "db:up": "docker compose up -d --wait database",
     "db:down": "docker compose down"
