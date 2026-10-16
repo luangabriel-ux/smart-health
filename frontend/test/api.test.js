@@ -42,3 +42,14 @@ test('falhas de rede, validação e respostas inválidas têm erros utilizáveis
   const invalid = createApi({ fetcher: async () => new Response('<html>') });
   await assert.rejects(invalid.me(), error => error.code === 'INVALID_RESPONSE');
 });
+
+test('resposta atrasada de sessão anterior não encerra um novo login', async () => {
+  let token = 'old-session', expired = 0, complete;
+  const api = createApi({ getToken: () => token, onUnauthorized: () => expired++,
+    fetcher: () => new Promise(resolve => { complete = resolve; }) });
+  const pending = api.me();
+  token = 'new-session';
+  complete(Response.json({ error: { code: 'UNAUTHENTICATED', message: 'Sessão expirada.' } }, { status: 401 }));
+  await assert.rejects(pending);
+  assert.equal(expired, 0);
+});
