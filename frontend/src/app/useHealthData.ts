@@ -11,12 +11,33 @@ export function useHealthData(api: Api, revision = 0) {
   const [error, setError] = useState('');
   const today = dateKey();
   useEffect(() => {
-    let active = true; setLoading(true); setError('');
+    let active = true;
+    setLoading(true);
+    setError('');
     Promise.all([api.progress(shiftDate(today, -29), today), api.getGoals()])
-      .then(([progress, targets]) => { if (active) { setDays(progress.data); setGoals(targets.data); } })
-      .catch(error => { if (active) setError(errorMessage(error)); })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
+      .then(([progress, targets]) => {
+        if (active) {
+          setDays(progress.data);
+          setGoals(targets.data);
+        }
+      })
+      .catch((error) => {
+        if (active) setError(errorMessage(error));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, [api, today, revision]);
-  return { days, goals, loading, error, today, daily: sumProgress(days.filter(day => day.date === today)), totals: sumProgress(days) };
+  return {
+    days,
+    goals,
+    loading,
+    error,
+    today,
+    daily: sumProgress(days.filter((day) => day.date === today)),
+    totals: sumProgress(days),
+  };
 }
