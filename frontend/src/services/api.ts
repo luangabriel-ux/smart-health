@@ -1,4 +1,4 @@
-import type { Activity, ActivityInput, Credentials, Profile, Session, User } from './types.ts';
+import type { Activity, ActivityInput, Content, ContentFilters, Credentials, Goals, GoalsInput, Profile, ProgressDay, Recommendations, Reminder, ReminderInput, Session, User } from './types.ts';
 
 export class ApiError extends Error {
   status: number;
@@ -45,7 +45,17 @@ export function createApi({ getToken = () => null, onUnauthorized = () => {}, fe
     listActivities: (limit = 20, offset = 0) => request<{ data: Activity[]; pagination: { limit: number; offset: number } }>(`/activities?limit=${limit}&offset=${offset}`),
     getActivity: (id: string) => request<{ data: Activity }>(`/activities/${encodeURIComponent(id)}`),
     createActivity: (input: ActivityInput) => request<{ data: Activity }>('/activities', { method: 'POST', body: input }),
-    removeActivity: (id: string) => request<void>(`/activities/${encodeURIComponent(id)}`, { method: 'DELETE' })
+    removeActivity: (id: string) => request<void>(`/activities/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    listReminders: () => request<{ data: Reminder[] }>('/reminders'),
+    createReminder: (input: ReminderInput) => request<{ data: Reminder }>('/reminders', { method: 'POST', body: input }),
+    updateReminder: (id: string, input: Partial<ReminderInput>) => request<{ data: Reminder }>(`/reminders/${encodeURIComponent(id)}`, { method: 'PATCH', body: input }),
+    removeReminder: (id: string) => request<void>(`/reminders/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+    progress: (from: string, to: string) => request<{ data: ProgressDay[] }>(`/progress?${new URLSearchParams({ from, to })}`),
+    getGoals: () => request<{ data: Goals | null }>('/progress/goals'),
+    saveGoals: (input: GoalsInput) => request<{ data: Goals }>('/progress/goals', { method: 'PUT', body: input }),
+    listContent: (filters: ContentFilters = {}, limit = 20, offset = 0) => request<{ data: Content[] }>(`/content?${new URLSearchParams({ ...filters, limit: String(limit), offset: String(offset) })}`),
+    getContent: (id: string) => request<{ data: Content }>(`/content/${encodeURIComponent(id)}`),
+    recommendations: () => request<{ data: Recommendations }>('/recommendations')
   };
 }
 export type Api = ReturnType<typeof createApi>;
