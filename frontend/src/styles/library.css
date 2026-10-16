@@ -86,8 +86,8 @@
   content: '';
   position: absolute;
   inset: auto 0 0;
-  height: 25px;
-  background: linear-gradient(transparent, #13262a);
+  height: 40px;
+  background: #13262a;
   pointer-events: none;
 }
 .video-detail-hero > .video-play {
@@ -253,7 +253,7 @@
   content: '';
   position: absolute;
   inset: 65% 0 0;
-  background: linear-gradient(transparent, #14203670);
+  background: linear-gradient(transparent, #13262a 35%);
   pointer-events: none;
 }
 .video-detail-hero > .badge {

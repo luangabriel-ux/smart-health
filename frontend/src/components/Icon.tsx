@@ -40,6 +40,8 @@ const paths = {
   help: 'M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 4M12 18h.01M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z',
   edit: 'm16 3 5 5L8 21H3v-5ZM13 6l5 5',
   volume: 'M11 3 5 8H2v8h3l6 5ZM15 7a7 7 0 0 1 0 10M18 4a11 11 0 0 1 0 16',
+  share:
+    'M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM9 11l6-4M9 13l6 4',
 } as const;
 export type IconName = keyof typeof paths;
 export function Icon({

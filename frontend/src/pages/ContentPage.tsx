@@ -266,7 +266,7 @@ export function ContentPage({
               }
               onClick={() => (article ? share(selected) : favorite(selected))}
             >
-              <Icon name={article ? 'next' : 'heart'} size={18} />
+              <Icon name={article ? 'share' : 'heart'} size={18} />
             </button>
           }
         />
