@@ -8,7 +8,7 @@ import { createActivitiesService } from './modules/activities/services/index.js'
 import { createActivitiesRouter } from './modules/activities/routes/index.js';
 import { errorHandler } from './middlewares/error-handling/index.js';
 
-export function createApp({ pool, registerModules = () => {} }) {
+export function createApp({ pool, registerModules = () => {}, frontendDirectory }) {
   const app = express();
   app.disable('x-powered-by');
   app.use((req,res,next) => { res.set('Cache-Control','no-store'); res.set('X-Content-Type-Options','nosniff'); next(); });
@@ -23,6 +23,7 @@ export function createApp({ pool, registerModules = () => {} }) {
   app.use('/api', createUsersRouter(usersService, authenticate));
   app.use('/api/activities', createActivitiesRouter(createActivitiesService(createActivitiesRepository(pool)), authenticate));
   registerModules(app, { pool, authenticate });
+  if (frontendDirectory) app.use(express.static(frontendDirectory));
   app.use((req,res) => res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Rota não encontrada.' } }));
   app.use(errorHandler);
   return app;
