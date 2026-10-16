@@ -35,7 +35,8 @@ export interface Activity extends Omit<ActivityInput, 'durationMinutes' | 'water
   createdAt: string;
 }
 
-export interface ReminderInput { title: string; time: string; weekdays: number[]; timezone: string; active: boolean }
+export type ReminderCategory = 'exercise' | 'medication' | 'water' | 'meal' | 'habit';
+export interface ReminderInput { title: string; time: string; weekdays: number[]; timezone: string; active: boolean; category?: ReminderCategory }
 export interface Reminder extends ReminderInput { id: string; userId: string; createdAt: string; updatedAt: string }
 export interface ProgressDay { date: string; waterMl: number; steps: number; durationMinutes: number; calories: number }
 export type GoalsInput = Partial<Pick<ProgressDay, 'waterMl' | 'steps' | 'durationMinutes' | 'calories'>>;

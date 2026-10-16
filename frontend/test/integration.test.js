@@ -60,9 +60,12 @@ test('cliente frontend → proxy Vite → API → PostgreSQL', { skip: !process.
     await other.register({ ...input, email: 'other@example.com' });
     const otherToken = (await other.login({ email: 'other@example.com', password: input.password })).data.accessToken;
     const otherApi = createApi({ getToken: () => otherToken, fetcher });
-    const reminder = (await api.createReminder({ title: 'Beber água', time: '09:00', weekdays: [1, 3, 5], timezone: 'America/Sao_Paulo', active: true })).data;
+    const reminder = (await api.createReminder({ title: 'Beber água', time: '09:00', weekdays: [1, 3, 5], timezone: 'America/Sao_Paulo', active: true, category: 'water' })).data;
+    assert.equal(reminder.category, 'water');
     assert.equal((await api.listReminders()).data[0].id, reminder.id);
     assert.equal((await api.updateReminder(reminder.id, { active: false })).data.active, false);
+    await api.updateReminder(reminder.id, { category: 'habit' });
+    assert.equal((await api.listReminders()).data[0].category, 'habit');
     await assert.rejects(otherApi.updateReminder(reminder.id, { title: 'Outro titular' }), error => error.status === 404);
     assert.deepEqual((await otherApi.listReminders()).data, []);
     await api.removeReminder(reminder.id);

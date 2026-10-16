@@ -10,9 +10,10 @@ export function createRemindersRepository(db) {
             time,
             weekdays,
             timezone,
-            active
+            active,
+            category
           )
-          VALUES ($1,$2,$3,$4,$5,$6,$7)
+          VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
           RETURNING *`,
           [
             id,
@@ -21,7 +22,8 @@ export function createRemindersRepository(db) {
             input.time,
             input.weekdays,
             input.timezone,
-            input.active
+            input.active,
+            input.category
           ]
         )
       ).rows[0];
@@ -56,7 +58,8 @@ export function createRemindersRepository(db) {
         time: 'time',
         weekdays: 'weekdays',
         timezone: 'timezone',
-        active: 'active'
+        active: 'active',
+        category: 'category'
       };
 
       const entries = Object.entries(values);
